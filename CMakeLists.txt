@@ -12,4 +12,11 @@ project(
   LANGUAGES CXX
 )
 
-include(cmake/clang-format.cmake)
+option(
+  quality_checks
+  "Disabling this disables quality checks such as clang-tidy and Cppcheck."
+  on
+)
+if(quality_checks)
+  include(cmake/clang-format.cmake)
+endif()
