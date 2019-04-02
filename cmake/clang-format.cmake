@@ -1,6 +1,7 @@
 # This file looks for the correct version of clang-format. If it is found, a
 # build target is created to run clang-format on software.
 
+message(STATUS "Configuring clang-format...")
 find_program(
   clang_format
   clang-format
