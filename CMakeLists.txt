@@ -5,10 +5,10 @@ if(CMAKE_BINARY_DIR MATCHES "${CMAKE_SOURCE_DIR}.*")
 endif()
 
 project(
-  curvy
+  ess
   VERSION 0.0
   DESCRIPTION "A library for various types of curves."
-  HOMEPAGE_URL "https://github.com/brobeson/curvy"
+  HOMEPAGE_URL "https://github.com/brobeson/ess"
   LANGUAGES CXX
 )
 

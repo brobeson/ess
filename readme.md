@@ -1,11 +1,12 @@
-# curvy
+# ess
 
 A C++ library for various types of curves.
 
 ## Building
 
 You need [CMake](https://cmake.org/) to generate a build system for this
-project. Check [CMakeLists.txt:1](https://github.com/brobeson/curvy/blob/11c29180d4209a6a7e594d6151adbd3c4512c203/CMakeLists.txt#L1)
+project. Check
+[CMakeLists.txt:1](https://github.com/brobeson/ess/blob/master/CMakeLists.txt#L1)
 for the minimum version needed.
 
 When you run CMake, there is the option `quality_checks`, which is on by
