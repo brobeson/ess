@@ -24,5 +24,7 @@ if(quality_checks)
 endif()
 
 if(quality_checks)
+  include(CTest)
+  add_subdirectory(unit_tests)
   include(cmake/cmakelint.cmake)
 endif()
