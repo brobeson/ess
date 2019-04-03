@@ -22,3 +22,7 @@ if(quality_checks)
   include(cmake/clang-tidy.cmake)
   include(cmake/lizard.cmake)
 endif()
+
+if(quality_checks)
+  include(cmake/cmakelint.cmake)
+endif()
