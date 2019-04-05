@@ -1,11 +1,11 @@
-# This file looks for lizard. If it is found, a build target is created to run
-# lizard CCN analysis on the software.
+# This file looks for Lizard. If it is found, a build target is created to run
+# Lizard CCN analysis on the software.
 
-message(STATUS "Configuring lizard CCN...")
+message(STATUS "Configuring Lizard CCN.")
 find_program(
   lizard
   lizard
-  DOC "The path to the lizard application."
+  DOC "The path to the Lizard application."
 )
 mark_as_advanced(lizard)
 if(NOT lizard)

@@ -1,7 +1,7 @@
 # This file looks for clang-tidy. If it is found, clang-tidy is configured to
 # run as part of the normal build process.
 
-message(STATUS "Configuring clang-tidy...")
+message(STATUS "Configuring clang-tidy.")
 find_program(
   clang_tidy
   clang-tidy
