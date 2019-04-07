@@ -67,9 +67,23 @@ matrix:
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
 
-#install:
+install:
+  - cd ${HOME}
+  - cmake_version=3.12.0
+  - wget https://github.com/Kitware/CMake/releases/download/v${cmake_version}/cmake-${cmake_version}-Linux-x86_64.sh
+  - chmod 764 ./cmake-${cmake_version}-Linux-x86_64.sh
+  - ./cmake-${cmake_version}-Linux-x86_64.sh --include-subdir --skip-license
+  - alias CMAKE=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/cmake
+  - alias CTEST=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/ctest
+  - alias CPACK=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/cpack
 #  - pip install --quiet --requirement ci-requirements.txt --requirement requirements.txt
 
 script:
-  - eval "${MATRIX_EVAL}"
-  - ${CXX} --version
+  - shopt -s expand_aliases
+  - source_directory="${TRAVIS_BUILD_DIR}"
+  - build_directory="${TRAVIS_BUILD_DIR}/../build"
+  - mkdir "${build_directory}"
+  - cd "${build_directory}"
+  - CMAKE -D CMAKE_BUILD_TYPE=Release -D quality_checks:BOOL=off "${source_directory}"
+#  - eval "${MATRIX_EVAL}"
+#  - ${CXX} --version
