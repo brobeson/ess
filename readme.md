@@ -2,6 +2,8 @@
 
 A C++ library for various types of curves.
 
+[![Build Status](https://travis-ci.com/brobeson/ess.svg?branch=master)](https://travis-ci.com/brobeson/ess)
+
 ## Building
 
 You need [CMake](https://cmake.org/) to generate a build system for this
