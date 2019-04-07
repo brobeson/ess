@@ -17,6 +17,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
+            - libboost1.55-all-dev
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
     - os: linux
@@ -26,6 +27,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-6
+            - libboost1.55-all-dev
       env:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
     - os: linux
@@ -35,6 +37,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
+            - libboost1.55-all-dev
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
     - os: linux
@@ -44,6 +47,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-8
+            - libboost1.55-all-dev
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
     - os: linux
@@ -54,6 +58,7 @@ matrix:
             - llvm-toolchain-trusty-7
           packages:
             - clang-7
+            - libboost1.55-all-dev
       env:
         - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
     - os: linux
@@ -64,10 +69,12 @@ matrix:
             - llvm-toolchain-trusty-8
           packages:
             - clang-8
+            - libboost1.55-all-dev
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
 
 install:
+  # install the minimum required version of CMake
   - cd ${HOME}
   - cmake_version=3.12.0
   - wget https://github.com/Kitware/CMake/releases/download/v${cmake_version}/cmake-${cmake_version}-Linux-x86_64.sh
@@ -76,14 +83,24 @@ install:
   - alias CMAKE=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/cmake
   - alias CTEST=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/ctest
   - alias CPACK=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/cpack
-#  - pip install --quiet --requirement ci-requirements.txt --requirement requirements.txt
 
-script:
-  - shopt -s expand_aliases
+  # set up a build directory, because in-source builds are not allowed
   - source_directory="${TRAVIS_BUILD_DIR}"
   - build_directory="${TRAVIS_BUILD_DIR}/../build"
   - mkdir "${build_directory}"
   - cd "${build_directory}"
-  - CMAKE -D CMAKE_BUILD_TYPE=Release -D quality_checks:BOOL=off "${source_directory}"
-#  - eval "${MATRIX_EVAL}"
-#  - ${CXX} --version
+#  - pip install --quiet --requirement ci-requirements.txt --requirement requirements.txt
+
+script:
+  #- apt-cache search -n libboost
+  - shopt -s expand_aliases
+  - eval "${MATRIX_EVAL}"
+
+  # release build & test
+  - CMAKE -D CMAKE_BUILD_TYPE=Release -D quality_checks:BOOL=on "${source_directory}"
+  - CMAKE --build . -- -j$(nproc)
+
+  # debug build & test
+  - rm -r *
+  - CMAKE -D CMAKE_BUILD_TYPE=Debug -D quality_checks:BOOL=on "${source_directory}"
+  - CMAKE --build . -- -j$(nproc)

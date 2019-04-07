@@ -32,7 +32,7 @@ endif()
 set(tests
   point_test
 )
-find_package(Boost 1.67 REQUIRED COMPONENTS unit_test_framework)
+find_package(Boost 1.55 REQUIRED COMPONENTS unit_test_framework)
 foreach(test IN LISTS tests)
   add_executable(${test} ${test}.cpp)
   target_link_libraries(

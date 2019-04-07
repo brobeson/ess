@@ -17,23 +17,23 @@ option(
   "Disabling this disables quality checks such as clang-tidy and Cppcheck."
   on
 )
-if(quality_checks)
-  include(cmake/clang-format.cmake)
-  include(cmake/clang-tidy.cmake)
-  include(cmake/cppcheck.cmake)
-  include(cmake/lizard.cmake)
-endif()
+#if(quality_checks)
+#  include(cmake/clang-format.cmake)
+#  include(cmake/clang-tidy.cmake)
+#  include(cmake/cppcheck.cmake)
+#  include(cmake/lizard.cmake)
+#endif()
 
 if(quality_checks)
-  string(CONCAT
-    MEMORYCHECK_COMMAND_OPTIONS
-    "--quiet"
-    " --gen-suppressions=all"
-    " --tool=memcheck"
-    " --leak-check=yes"
-    " --error-exitcode=1"
-  )
+  #string(CONCAT
+  #  MEMORYCHECK_COMMAND_OPTIONS
+  #  "--quiet"
+  #  " --gen-suppressions=all"
+  #  " --tool=memcheck"
+  #  " --leak-check=yes"
+  #  " --error-exitcode=1"
+  #)
   include(CTest)
   add_subdirectory(unit_tests)
-  include(cmake/cmakelint.cmake)
+  #include(cmake/cmakelint.cmake)
 endif()
