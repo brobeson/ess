@@ -99,8 +99,10 @@ script:
   # release build & test
   - CMAKE -D CMAKE_BUILD_TYPE=Release -D quality_checks:BOOL=on "${source_directory}"
   - CMAKE --build . -- -j$(nproc)
+  - CTEST --output-on-failure
 
   # debug build & test
   - rm -r *
   - CMAKE -D CMAKE_BUILD_TYPE=Debug -D quality_checks:BOOL=on "${source_directory}"
   - CMAKE --build . -- -j$(nproc)
+  - CTEST --output-on-failure
