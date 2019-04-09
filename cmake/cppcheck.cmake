@@ -23,9 +23,8 @@ set(
   --enable=warning
   --enable=style
   --enable=information
-  --error-exitcode=1
+  --error-exitcode=2
   --quiet
   -j ${threads}
   --relative-paths "${CMAKE_SOURCE_DIR}"
 )
-

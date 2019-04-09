@@ -1,6 +1,7 @@
 # vim: nospell
 
 language: cpp
+dist: xenial
 #git:
 #  quiet: true
 #  submodules: false
@@ -16,8 +17,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - cppcheck
             - g++-5
-            - libboost1.55-all-dev
+            - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
     - os: linux
@@ -26,8 +28,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - cppcheck
             - g++-6
-            - libboost1.55-all-dev
+            - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
     - os: linux
@@ -36,8 +39,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - cppcheck
             - g++-7
-            - libboost1.55-all-dev
+            - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
     - os: linux
@@ -46,8 +50,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - cppcheck
             - g++-8
-            - libboost1.55-all-dev
+            - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
     - os: linux
@@ -57,8 +62,9 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-7
           packages:
+            - cppcheck
             - clang-7
-            - libboost1.55-all-dev
+            - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
     - os: linux
@@ -68,8 +74,9 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-8
           packages:
+            - cppcheck
             - clang-8
-            - libboost1.55-all-dev
+            - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
 
@@ -88,21 +95,38 @@ install:
   - source_directory="${TRAVIS_BUILD_DIR}"
   - build_directory="${TRAVIS_BUILD_DIR}/../build"
   - mkdir "${build_directory}"
-  - cd "${build_directory}"
 #  - pip install --quiet --requirement ci-requirements.txt --requirement requirements.txt
 
-script:
-  #- apt-cache search -n libboost
   - shopt -s expand_aliases
   - eval "${MATRIX_EVAL}"
 
+script:
+  # Run Cppcheck manually. CMake ignores Cppcheck's exit status, so if an error
+  # is reported, the build would still pass.
+  - cd "${source_directory}"
+  - cppcheck
+    --quiet
+    --enable=warning
+    --enable=style
+    --enable=information
+    --error-exitcode=2
+    -j $(nproc)
+    .
+
   # release build & test
-  - CMAKE -D CMAKE_BUILD_TYPE=Release -D quality_checks:BOOL=on "${source_directory}"
+  - cd "${build_directory}"
+  - CMAKE
+    -D CMAKE_BUILD_TYPE=Release
+    -D quality_checks:BOOL=on
+    "${source_directory}"
   - CMAKE --build . -- -j$(nproc)
   - CTEST --output-on-failure
 
   # debug build & test
   - rm -r *
-  - CMAKE -D CMAKE_BUILD_TYPE=Debug -D quality_checks:BOOL=on "${source_directory}"
+  - CMAKE
+    -D CMAKE_BUILD_TYPE=Debug
+    -D quality_checks:BOOL=on
+    "${source_directory}"
   - CMAKE --build . -- -j$(nproc)
   - CTEST --output-on-failure
