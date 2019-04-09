@@ -19,7 +19,7 @@ option(
 )
 if(quality_checks)
   include(cmake/clang-format.cmake)
-  #include(cmake/clang-tidy.cmake)
+  include(cmake/clang-tidy.cmake)
   include(cmake/cppcheck.cmake)
   #include(cmake/lizard.cmake)
 endif()
