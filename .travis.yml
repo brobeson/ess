@@ -115,7 +115,7 @@ install:
   - source_directory="${TRAVIS_BUILD_DIR}"
   - build_directory="${TRAVIS_BUILD_DIR}/../build"
   - mkdir "${build_directory}"
-#  - pip install --quiet --requirement ci-requirements.txt --requirement requirements.txt
+  #- pip install --quiet --requirement ci-requirements.txt --requirement requirements.txt
 
 script:
   # Run Cppcheck manually. CMake ignores Cppcheck's exit status, so if an error
@@ -150,6 +150,7 @@ script:
     && CMAKE
       -D CMAKE_BUILD_TYPE=Debug
       -D quality_checks:BOOL=on
+      -D dynamic_analysis:STRING=asan
       "${source_directory}"
     && CMAKE --build . -- -j$(nproc)
     && CTEST --output-on-failure
