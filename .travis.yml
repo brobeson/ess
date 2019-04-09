@@ -16,9 +16,11 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-7
           packages:
             - cppcheck
             - g++-5
+            - clang-format-7
             - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
@@ -27,9 +29,11 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-7
           packages:
             - cppcheck
             - g++-6
+            - clang-format-7
             - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
@@ -38,9 +42,11 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-7
           packages:
             - cppcheck
             - g++-7
+            - clang-format-7
             - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
@@ -49,9 +55,11 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-7
           packages:
             - cppcheck
             - g++-8
+            - clang-format-7
             - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
@@ -60,10 +68,11 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-7
+            - llvm-toolchain-xenial-7
           packages:
             - cppcheck
             - clang-7
+            - clang-format-7
             - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
@@ -72,15 +81,19 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-8
+            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - clang-8
+            - clang-format-7
             - libboost-test-dev
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
 
 install:
+  - eval "${MATRIX_EVAL}"
+
   # install the minimum required version of CMake
   - cd ${HOME}
   - cmake_version=3.12.0
@@ -90,15 +103,13 @@ install:
   - alias CMAKE=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/cmake
   - alias CTEST=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/ctest
   - alias CPACK=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/cpack
+  - shopt -s expand_aliases
 
   # set up a build directory, because in-source builds are not allowed
   - source_directory="${TRAVIS_BUILD_DIR}"
   - build_directory="${TRAVIS_BUILD_DIR}/../build"
   - mkdir "${build_directory}"
 #  - pip install --quiet --requirement ci-requirements.txt --requirement requirements.txt
-
-  - shopt -s expand_aliases
-  - eval "${MATRIX_EVAL}"
 
 script:
   # Run Cppcheck manually. CMake ignores Cppcheck's exit status, so if an error
@@ -121,6 +132,12 @@ script:
     "${source_directory}"
   - CMAKE --build . -- -j$(nproc)
   - CTEST --output-on-failure
+
+  # fail if clang-format modified anything at the start of the release build
+  #- cd "${source_directory}" && [[ -z $(git status --porcelain) ]]
+  - cd "${source_directory}"
+  - tools/validate_formatting.sh
+  - cd "${build_directory}"
 
   # debug build & test
   - rm -r *
