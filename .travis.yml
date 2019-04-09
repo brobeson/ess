@@ -23,6 +23,7 @@ matrix:
             - clang-format-7
             - clang-tidy-7
             - libboost-test-dev
+            - valgrind
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
     - os: linux
@@ -37,6 +38,7 @@ matrix:
             - clang-format-7
             - clang-tidy-7
             - libboost-test-dev
+            - valgrind
       env:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
     - os: linux
@@ -51,6 +53,7 @@ matrix:
             - clang-format-7
             - clang-tidy-7
             - libboost-test-dev
+            - valgrind
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
     - os: linux
@@ -65,6 +68,7 @@ matrix:
             - clang-format-7
             - clang-tidy-7
             - libboost-test-dev
+            - valgrind
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
     - os: linux
@@ -79,6 +83,7 @@ matrix:
             - clang-format-7
             - clang-tidy-7
             - libboost-test-dev
+            - valgrind
       env:
         - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
     - os: linux
@@ -94,6 +99,7 @@ matrix:
             - clang-format-7
             - clang-tidy-8
             - libboost-test-dev
+            - valgrind
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
 
@@ -145,7 +151,7 @@ script:
   - tools/validate_formatting.sh
   - cd "${build_directory}"
 
-  # debug build & test
+  # debug build & test with address sanitizer
   - rm -r *
     && CMAKE
       -D CMAKE_BUILD_TYPE=Debug
@@ -154,3 +160,14 @@ script:
       "${source_directory}"
     && CMAKE --build . -- -j$(nproc)
     && CTEST --output-on-failure
+
+  # debug build & test with Valgrind
+  - rm -r *
+    && CMAKE
+      -D CMAKE_BUILD_TYPE=Debug
+      -D quality_checks:BOOL=on
+      -D dynamic_analysis:STRING=valgrind
+      "${source_directory}"
+    && CMAKE --build . -- -j$(nproc)
+    && CTEST --output-on-failure --dashboard ExperimentalMemCheck
+  - find . -name 'MemoryChecker.*.log' -exec cat {} \;

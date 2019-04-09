@@ -25,14 +25,15 @@ if(quality_checks)
 endif()
 
 if(quality_checks)
-  #string(CONCAT
-  #  MEMORYCHECK_COMMAND_OPTIONS
-  #  "--quiet"
-  #  " --gen-suppressions=all"
-  #  " --tool=memcheck"
-  #  " --leak-check=yes"
-  #  " --error-exitcode=1"
-  #)
+  string(CONCAT
+    MEMORYCHECK_COMMAND_OPTIONS
+    "--quiet"
+    " --gen-suppressions=all"
+    " --tool=memcheck"
+    " --leak-check=yes"
+    " --track-origins=yes"
+    " --error-exitcode=1"
+  )
   include(CTest)
   add_subdirectory(unit_tests)
   #include(cmake/cmakelint.cmake)
