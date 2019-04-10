@@ -11,7 +11,7 @@ build_script:
 
       cd ..\build
 
-      cmake -D quality_checks:BOOL=on c:\projects\source
+      cmake -D quality_checks:BOOL=off c:\projects\source
 
       cmake --build . --config Release
 
