@@ -8,6 +8,10 @@ clone_folder: c:\projects\source
 build_script:
   - cmd: >-
       mkdir ..\build
+
       cd ..\build
+
       cmake -D quality_checks:BOOL=on c:\projects\source
+
       cmake --build . --config Release
+
