@@ -6,12 +6,8 @@ image:
   - Visual Studio 2017
 clone_folder: c:\projects\source
 build_script:
-  - cmd: >-
-      mkdir ..\build
-
-      cd ..\build
-
-      cmake -D quality_checks:BOOL=off c:\projects\source
-
-      cmake --build . --config Release
+  - cmd: mkdir ..\build
+  - cmd: cd ..\build
+  - cmd: cmake -D quality_checks:BOOL=off c:\projects\source
+  - cmd: cmake --build . --config Release
 
