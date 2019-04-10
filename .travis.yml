@@ -12,6 +12,7 @@ dist: xenial
 matrix:
   include:
     - os: linux
+      name: GCC 5
       addons:
         apt:
           sources:
@@ -27,6 +28,7 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
     - os: linux
+      name: GCC 6
       addons:
         apt:
           sources:
@@ -42,6 +44,7 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
     - os: linux
+      name: GCC 7
       addons:
         apt:
           sources:
@@ -57,6 +60,7 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
     - os: linux
+      name: GCC 8
       addons:
         apt:
           sources:
@@ -72,6 +76,7 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
     - os: linux
+      name: Clang 7
       addons:
         apt:
           sources:
@@ -87,6 +92,7 @@ matrix:
       env:
         - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
     - os: linux
+      name: Clang 8
       addons:
         apt:
           sources:
@@ -105,23 +111,12 @@ matrix:
 
 install:
   - eval "${MATRIX_EVAL}"
-
-  # install the minimum required version of CMake
-  - cd ${HOME}
-  - cmake_version=3.12.0
-  - wget https://github.com/Kitware/CMake/releases/download/v${cmake_version}/cmake-${cmake_version}-Linux-x86_64.sh
-  - chmod 764 ./cmake-${cmake_version}-Linux-x86_64.sh
-  - ./cmake-${cmake_version}-Linux-x86_64.sh --include-subdir --skip-license
-  - alias CMAKE=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/cmake
-  - alias CTEST=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/ctest
-  - alias CPACK=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin/cpack
-  - shopt -s expand_aliases
+  - pip install --user ${USER} cmakelint lizard
 
   # set up a build directory, because in-source builds are not allowed
   - source_directory="${TRAVIS_BUILD_DIR}"
   - build_directory="${TRAVIS_BUILD_DIR}/../build"
   - mkdir "${build_directory}"
-  #- pip install --quiet --requirement ci-requirements.txt --requirement requirements.txt
 
 script:
   # Run Cppcheck manually. CMake ignores Cppcheck's exit status, so if an error
@@ -138,12 +133,12 @@ script:
 
   # release build & test
   - cd "${build_directory}"
-    && CMAKE
+    && cmake
       -D CMAKE_BUILD_TYPE=Release
       -D quality_checks:BOOL=on
       "${source_directory}"
-    && CMAKE --build . -- -j$(nproc)
-    && CTEST --output-on-failure
+    && cmake --build . -- -j$(nproc)
+    && ctest --output-on-failure
 
   # fail if clang-format modified anything at the start of the release build
   #- cd "${source_directory}" && [[ -z $(git status --porcelain) ]]
@@ -153,21 +148,21 @@ script:
 
   # debug build & test with address sanitizer
   - rm -r *
-    && CMAKE
+    && cmake
       -D CMAKE_BUILD_TYPE=Debug
       -D quality_checks:BOOL=on
       -D dynamic_analysis:STRING=asan
       "${source_directory}"
-    && CMAKE --build . -- -j$(nproc)
-    && CTEST --output-on-failure
+    && cmake --build . -- -j$(nproc)
+    && ctest --output-on-failure
 
   # debug build & test with Valgrind
   - rm -r *
-    && CMAKE
+    && cmake
       -D CMAKE_BUILD_TYPE=Debug
       -D quality_checks:BOOL=on
       -D dynamic_analysis:STRING=valgrind
       "${source_directory}"
-    && CMAKE --build . -- -j$(nproc)
-    && CTEST --output-on-failure --dashboard ExperimentalMemCheck
+    && cmake --build . -- -j$(nproc)
+    && ctest --output-on-failure --dashboard ExperimentalMemCheck
   - find . -name 'MemoryChecker.*.log' -exec cat {} \;
