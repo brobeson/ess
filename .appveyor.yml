@@ -18,4 +18,4 @@ build_script:
   - cmd: cmake --build . --config %CONFIGURATION%
 
 test_script:
-  - cmd: ctest --output-on-failure
+  - cmd: ctest --output-on-failure --build-config %CONFIGURATION%
