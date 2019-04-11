@@ -4,10 +4,16 @@ image:
   - Visual Studio 2013
   - Visual Studio 2015
   - Visual Studio 2017
+platform: x64
+configuration:
+  - Debug
+  - Release
+
 clone_folder: c:\projects\source
+
 build_script:
   - cmd: mkdir ..\build
   - cmd: cd ..\build
   - cmd: cmake -D quality_checks:BOOL=off c:\projects\source
-  - cmd: cmake --build . --config Release
+  - cmd: cmake --build . --config %CONFIGURATION%
 
