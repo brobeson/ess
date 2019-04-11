@@ -17,12 +17,12 @@ option(
   "Disabling this disables quality checks such as clang-tidy and Cppcheck."
   on
 )
-if(quality_checks)
-  include(cmake/clang-format.cmake)
-  include(cmake/clang-tidy.cmake)
-  include(cmake/cppcheck.cmake)
-  include(cmake/lizard.cmake)
-endif()
+#if(quality_checks)
+#  include(cmake/clang-format.cmake)
+#  include(cmake/clang-tidy.cmake)
+#  include(cmake/cppcheck.cmake)
+#  include(cmake/lizard.cmake)
+#endif()
 
 if(quality_checks)
   string(CONCAT
@@ -36,5 +36,5 @@ if(quality_checks)
   )
   include(CTest)
   add_subdirectory(unit_tests)
-  include(cmake/cmakelint.cmake)
+  #include(cmake/cmakelint.cmake)
 endif()

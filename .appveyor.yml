@@ -14,6 +14,8 @@ clone_folder: c:\projects\source
 build_script:
   - cmd: mkdir ..\build
   - cmd: cd ..\build
-  - cmd: cmake -D quality_checks:BOOL=off c:\projects\source
+  - cmd: cmake -D quality_checks:BOOL=on c:\projects\source
   - cmd: cmake --build . --config %CONFIGURATION%
 
+test_script:
+  - cmd: ctest --output-on-failure
