@@ -9,13 +9,10 @@ configuration:
   - Release
 clone_folder: c:\projects\source
 
-install:
-  - cmd: C:\Python37-x64\Scripts\pip install --user cmakelint lizard
-
 build_script:
   - cmd: mkdir ..\build
   - cmd: cd ..\build
-  - cmd: cmake -D quality_checks:BOOL=on c:\projects\source
+  - cmd: cmake -Werror=dev -D quality_checks:BOOL=on c:\projects\source
   - cmd: cmake --build . --config %CONFIGURATION%
 
 test_script:
