@@ -2,7 +2,9 @@
 
 A C++ library for various types of curves.
 
-[![Build Status](https://travis-ci.com/brobeson/ess.svg?branch=master)](https://travis-ci.com/brobeson/ess)
+[![Travis CI Build Status](https://travis-ci.com/brobeson/ess.svg?branch=master)](https://travis-ci.com/brobeson/ess)
+
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/sq748wjywgvhwpx0?svg=true)](https://ci.appveyor.com/project/brobeson/ess)
 
 ## Building
 
