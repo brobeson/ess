@@ -42,5 +42,5 @@ foreach(test IN LISTS tests)
       #Boost::unit_test_framework
   )
   target_compile_definitions(${test} PRIVATE BOOST_TEST_DYN_LINK)
-  add_test(NAME ${test} COMMAND ${test} --color_output=yes)
+  add_test(NAME ${test} COMMAND ${test})
 endforeach()
