@@ -12,5 +12,5 @@
 
 TEST_CASE("Dummy test")
 {
-  REQUIRE(1 == 0);
+  REQUIRE(0 == 0);
 }
