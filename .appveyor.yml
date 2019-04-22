@@ -14,6 +14,8 @@ build_script:
   - cmd: cd ..\build
   - cmd: >
       cmake
+      -warn-uninitialized
+      -warn-unused-vars
       -Werror=deprecated
       -Werror=dev
       -D quality_checks:BOOL=on
