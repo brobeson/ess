@@ -12,7 +12,12 @@ clone_folder: c:\projects\source
 build_script:
   - cmd: mkdir ..\build
   - cmd: cd ..\build
-  - cmd: cmake -Werror=dev -D quality_checks:BOOL=on c:\projects\source
+  - cmd: >
+      cmake
+      -Werror=deprecated
+      -Werror=dev
+      -D quality_checks:BOOL=on
+      c:\projects\source
   - cmd: cmake --build . --config %CONFIGURATION%
 
 test_script:
