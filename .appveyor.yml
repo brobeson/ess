@@ -10,7 +10,7 @@ configuration:
 clone_folder: c:\projects\source
 
 install:
-  - cmd: pip --version
+  - cmd: C:\Python37-x64\Scripts\pip --version
 
 build_script:
   - cmd: mkdir ..\build
