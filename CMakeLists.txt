@@ -12,8 +12,6 @@ project(
   LANGUAGES CXX
 )
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED true)
 option(
   quality_checks
   "Disabling this disables quality checks such as clang-tidy and Cppcheck."
