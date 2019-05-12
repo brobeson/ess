@@ -15,7 +15,7 @@ namespace ess
   struct point2 final
   {
     using value_type = std::decay_t<T>;
-    static_assert(std::is_arithmetic_v<value_type>,
+    static_assert(std::is_arithmetic<value_type>::value,
                   "For point2<T>, T must be an arithmetic type.");
 
     value_type x {0};
@@ -31,7 +31,7 @@ namespace ess
   struct point3 final
   {
     using value_type = std::decay_t<T>;
-    static_assert(std::is_arithmetic_v<value_type>,
+    static_assert(std::is_arithmetic<value_type>::value,
                   "For point3<T>, T must be an arithmetic type.");
 
     value_type x;
@@ -43,7 +43,7 @@ namespace ess
   struct vector2 final
   {
     using value_type = std::decay_t<T>;
-    static_assert(std::is_arithmetic_v<value_type>,
+    static_assert(std::is_arithmetic<value_type>::value,
                   "For vector2<T>, T must be an arithmetic type.");
 
     value_type x;
@@ -54,7 +54,7 @@ namespace ess
   struct vector3 final
   {
     using value_type = std::decay_t<T>;
-    static_assert(std::is_arithmetic_v<value_type>,
+    static_assert(std::is_arithmetic<value_type>::value,
                   "For vector3<T>, T must be an arithmetic type.");
 
     value_type x;
@@ -67,49 +67,49 @@ namespace ess
   //---------------------------------------------------------------------------
 
   template <typename T, typename U>
-  constexpr bool operator==(const point2<T> a, const point2<U> b) noexcept
+  constexpr bool operator==(const point2<T>& a, const point2<U>& b) noexcept
   {
     return a.x == b.x && a.y == b.y;
   }
 
   template <typename T, typename U>
-  constexpr bool operator!=(const point2<T> a, const point2<U> b) noexcept
+  constexpr bool operator!=(const point2<T>& a, const point2<U>& b) noexcept
   {
     return !(a == b);
   }
 
   template <typename T, typename U>
-  constexpr bool operator==(const point3<T> a, const point3<U> b) noexcept
+  constexpr bool operator==(const point3<T>& a, const point3<U>& b) noexcept
   {
     return a.x == b.x && a.y == b.y && a.z == b.y;
   }
 
   template <typename T, typename U>
-  constexpr bool operator!=(const point3<T> a, const point3<U> b) noexcept
+  constexpr bool operator!=(const point3<T>& a, const point3<U>& b) noexcept
   {
     return !(a == b);
   }
 
   template <typename T, typename U>
-  constexpr bool operator==(const vector2<T> a, const vector2<U> b) noexcept
+  constexpr bool operator==(const vector2<T>& a, const vector2<U>& b) noexcept
   {
     return a.x == b.x && a.y == b.y;
   }
 
   template <typename T, typename U>
-  constexpr bool operator!=(const vector2<T> a, const vector2<U> b) noexcept
+  constexpr bool operator!=(const vector2<T>& a, const vector2<U>& b) noexcept
   {
     return !(a == b);
   }
 
   template <typename T, typename U>
-  constexpr bool operator==(const vector3<T> a, const vector3<U> b) noexcept
+  constexpr bool operator==(const vector3<T>& a, const vector3<U>& b) noexcept
   {
     return a.x == b.x && a.y == b.y && a.z == b.y;
   }
 
   template <typename T, typename U>
-  constexpr bool operator!=(const vector3<T> a, const vector3<U> b) noexcept
+  constexpr bool operator!=(const vector3<T>& a, const vector3<U>& b) noexcept
   {
     return !(a == b);
   }
