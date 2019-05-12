@@ -81,6 +81,7 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-7
             - llvm-toolchain-xenial-8
           packages:
             - cppcheck
@@ -110,7 +111,7 @@ matrix:
 
 install:
   - eval "${MATRIX_EVAL}"
-  - pip install --user ${USER} cmakelint lizard
+  - pip install --user ${USER} cmakelint lizard conan
 
   # set up a build directory, because in-source builds are not allowed
   - source_directory="${TRAVIS_BUILD_DIR}"
@@ -132,6 +133,7 @@ script:
 
   # release build & test
   - cd "${build_directory}"
+    && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Release
       -D quality_checks:BOOL=on
@@ -147,6 +149,7 @@ script:
 
   # debug build & test with address sanitizer
   - rm -r *
+    && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Debug
       -D quality_checks:BOOL=on
@@ -157,6 +160,7 @@ script:
 
   # debug build & test with Valgrind
   - rm -r *
+    && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Debug
       -D quality_checks:BOOL=on

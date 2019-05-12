@@ -12,6 +12,8 @@ project(
   LANGUAGES CXX
 )
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
 option(
   quality_checks
   "Disabling this disables quality checks such as clang-tidy and Cppcheck."
@@ -24,6 +26,14 @@ if(quality_checks)
   include(cmake/lizard.cmake)
 endif()
 include(cmake/compiler.cmake)
+
+add_library(${PROJECT_NAME} INTERFACE)
+add_library(ess::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+target_include_directories(
+  ${PROJECT_NAME}
+  INTERFACE
+    "${CMAKE_SOURCE_DIR}/include"
+)
 
 if(quality_checks)
   string(CONCAT

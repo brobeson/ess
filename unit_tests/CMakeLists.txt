@@ -29,18 +29,21 @@ else()
   )
 endif()
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
+find_package(Catch2 REQUIRED)
+
 set(tests
   point_test
 )
-find_package(Boost 1.55 REQUIRED COMPONENTS unit_test_framework)
 foreach(test IN LISTS tests)
-  add_executable(${test} ${test}.cpp)
+  add_executable(${test} ${test}.cpp main.cpp)
   target_link_libraries(
     ${test}
     PRIVATE
       $<$<STREQUAL:"${dynamic_analysis}","asan">:asan>
-      Boost::unit_test_framework
+      Catch2::Catch2
+      ess::ess
   )
-  target_compile_definitions(${test} PRIVATE BOOST_TEST_DYN_LINK)
-  add_test(NAME ${test} COMMAND ${test} --color_output=yes)
+  target_compile_features(${test} PRIVATE cxx_std_17)
+  add_test(NAME ${test} COMMAND ${test})
 endforeach()

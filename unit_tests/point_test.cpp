@@ -1,7 +1,13 @@
-#define BOOST_TEST_MODULE Ess Point Test
-#include <boost/test/unit_test.hpp>
+#include "point.h"
+#include <catch2/catch.hpp>
 
-BOOST_AUTO_TEST_CASE(Foo)  // NOLINT
+TEST_CASE("Equality")
 {
-  BOOST_CHECK_EQUAL(0, 0);
+  const ess::point2<int> a {1, 3};
+  const ess::point2<int> b {1, 3};
+  const ess::point2<int> c {1, 2};
+  const ess::point2<int> d {0, 3};
+  REQUIRE(a == b);
+  REQUIRE(a != c);
+  REQUIRE(a != d);
 }
