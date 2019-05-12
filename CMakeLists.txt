@@ -25,6 +25,7 @@ if(quality_checks)
   include(cmake/cppcheck.cmake)
   include(cmake/lizard.cmake)
 endif()
+include(cmake/compiler.cmake)
 
 if(quality_checks)
   string(CONCAT
