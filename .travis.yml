@@ -17,12 +17,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - g++-5
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -33,12 +33,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - g++-6
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -49,12 +49,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - g++-7
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -65,12 +65,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - g++-8
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -81,12 +81,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - clang-7
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -97,12 +97,11 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
             - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - clang-8
-            - clang-format-7
+            - clang-format-8
             - clang-tidy-8
             - libboost-test-dev
             - valgrind

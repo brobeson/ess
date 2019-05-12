@@ -10,7 +10,7 @@ find_program(
 mark_as_advanced(clang_format)
 if(NOT clang_format)
   message(
-    WARNING
+    AUTHOR_WARNING
     "Clang-format was not found. A formatting target will not be created."
   )
   return()
@@ -29,10 +29,10 @@ string(
   clang_format_version
   "${clang_format_version}"
 )
-set(required_version "7.0.0")
+set(required_version "8.0.0")
 if(NOT clang_format_version VERSION_EQUAL ${required_version})
   message(
-    WARNING
+    AUTHOR_WARNING
     "Your clang-format version is ${clang_format_version}. Version"
     " ${required_version} exactly is required. A formatting target will not be"
     " created."
