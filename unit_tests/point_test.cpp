@@ -1,4 +1,4 @@
-#include "point.h"
+#include "basic_geometry.h"
 #include <catch2/catch.hpp>
 
 TEST_CASE("Equality")
