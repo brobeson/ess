@@ -32,6 +32,8 @@ target_include_directories(
   INTERFACE
     "${CMAKE_SOURCE_DIR}/include"
 )
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
+target_compile_options(${PROJECT_NAME} INTERFACE -fconcepts)
 
 if(quality_checks)
   string(CONCAT

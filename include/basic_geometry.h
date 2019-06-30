@@ -6,10 +6,39 @@
 
 namespace ess
 {
+  //---------------------------------------------------------------------------
+  //                                                                  concepts
+  //---------------------------------------------------------------------------
+
+  // Clang-Format does not support formatting Concepts, yet.
+  // clang-format off
+  template <typename T>
+  concept bool Integer = std::is_integral_v<T>
+    && !(std::is_same_v<std::decay_t<T>, bool>
+      || std::is_same_v<std::decay_t<T>, char>
+      || std::is_same_v<std::decay_t<T>, char16_t>
+      || std::is_same_v<std::decay_t<T>, char32_t>
+      || std::is_same_v<std::decay_t<T>, wchar_t>);
+
+  template <typename T>
+  concept bool Number = std::is_floating_point_v< T> || Integer<T>;
+  // clang-format on
+
+  //---------------------------------------------------------------------------
+  //                                                    point & vector classes
+  //---------------------------------------------------------------------------
+
   template <typename T>
   class vector2;
   template <typename T>
   class vector3;
+
+  template <Number T>
+  struct P final
+  {
+    T x {0};
+    T y {0};
+  };
 
   template <typename T>
   struct point2 final
