@@ -13,9 +13,12 @@ namespace ess
   // Clang-Format does not support formatting Concepts, yet.
   // clang-format off
   template <typename T>
-  concept bool Integer = std::is_integral_v<T>
+  concept bool Integer =
+    std::is_integral_v<T>
     && !(std::is_same_v<std::decay_t<T>, bool>
       || std::is_same_v<std::decay_t<T>, char>
+      || std::is_same_v<std::decay_t<T>, signed char>
+      || std::is_same_v<std::decay_t<T>, unsigned char>
       || std::is_same_v<std::decay_t<T>, char16_t>
       || std::is_same_v<std::decay_t<T>, char32_t>
       || std::is_same_v<std::decay_t<T>, wchar_t>);
