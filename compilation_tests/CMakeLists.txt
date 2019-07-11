@@ -1,13 +1,35 @@
 # Set up compilation tests. These tests validate that code which should not
 # compile, does not compile.
-#
-# 1. Set up the compiler command, based on the compiler found by CMake. All this
-#    command needs to do is attempt to compile a single source file to a single
-#    object file.
-# 2. For each test source file, add a test that runs the compiler command.
-# 3. Inform CTest that failure to compile is a successful test, and that
-#    successful compilation is a failing test.
 
+# Generate tests files. This simplifies adding more tests in the future. Just
+# add classes or template types, and the basic C++ source file will be
+# generated.
+foreach(class point2 point3 vector2 vector3)
+  set(types
+    bool
+    std::byte
+    char
+    char16_t
+    char32_t
+    "int*"
+    "signed char"
+    "unsigned char"
+    wchar_t
+  )
+  foreach(type IN LISTS types)
+    set(filename "${class}_${type}_compilation_test.cpp")
+    string(REPLACE " " "_" filename ${filename})
+    string(REPLACE "*" "_pointer" filename ${filename})
+    string(REPLACE "std::" "" filename ${filename})
+    configure_file(basic_geometry_compilation_test.in.cpp ${filename})
+    get_filename_component(filename ${filename} NAME_WE)
+    list(APPEND tests ${filename})
+  endforeach()
+endforeach()
+
+# Set up the compiler command, based on the compiler found by CMake. All this
+# command needs to do is attempt to compile a single source file to a single
+# object file.
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(build_command
     ${CMAKE_CXX_COMPILER}
@@ -23,13 +45,14 @@ else()
     " supported."
   )
 endif()
-set(tests
-  point_bool_compilation_test
-)
+
+# 1. For each test source file, add a test that runs the compiler command.
+# 2. Inform CTest that failure to compile is a successful test, and that
+#    successful compilation is a failing test.
 foreach(test IN LISTS tests)
   add_test(
     NAME ${test}
-    COMMAND ${build_command} "${CMAKE_CURRENT_SOURCE_DIR}/${test}.cpp"
+    COMMAND ${build_command} "${CMAKE_CURRENT_BINARY_DIR}/${test}.cpp"
   )
 endforeach()
 set_tests_properties(

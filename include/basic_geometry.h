@@ -47,9 +47,6 @@ namespace ess
   struct point2 final
   {
     using value_type = std::decay_t<T>;
-    static_assert(std::is_arithmetic<value_type>::value,
-                  "For point2<T>, T must be an arithmetic type.");
-
     value_type x {0};
     value_type y {0};
 
@@ -63,9 +60,6 @@ namespace ess
   struct point3 final
   {
     using value_type = std::decay_t<T>;
-    static_assert(std::is_arithmetic<value_type>::value,
-                  "For point3<T>, T must be an arithmetic type.");
-
     value_type x;
     value_type y;
     value_type z;
@@ -75,9 +69,6 @@ namespace ess
   struct vector2 final
   {
     using value_type = std::decay_t<T>;
-    static_assert(std::is_arithmetic<value_type>::value,
-                  "For vector2<T>, T must be an arithmetic type.");
-
     value_type x;
     value_type y;
   };
@@ -86,9 +77,6 @@ namespace ess
   struct vector3 final
   {
     using value_type = std::decay_t<T>;
-    static_assert(std::is_arithmetic<value_type>::value,
-                  "For vector3<T>, T must be an arithmetic type.");
-
     value_type x;
     value_type y;
     value_type z;
