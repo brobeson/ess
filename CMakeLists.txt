@@ -17,12 +17,12 @@ option(
   "Disabling this disables quality checks such as clang-tidy and Cppcheck."
   on
 )
-if(quality_checks)
-  include(cmake/clang-format.cmake)
-  include(cmake/clang-tidy.cmake)
-  include(cmake/cppcheck.cmake)
-  include(cmake/lizard.cmake)
-endif()
+#if(quality_checks)
+#  include(cmake/clang-format.cmake)
+#  include(cmake/clang-tidy.cmake)
+#  include(cmake/cppcheck.cmake)
+#  include(cmake/lizard.cmake)
+#endif()
 include(cmake/compiler.cmake)
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -33,9 +33,23 @@ target_include_directories(
     "${CMAKE_SOURCE_DIR}/include"
 )
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-target_compile_options(${PROJECT_NAME} INTERFACE -fconcepts)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
+  AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 6.1
+)
+  target_compile_options(${PROJECT_NAME} INTERFACE -fconcepts)
+else()
+  # TODO Add support for Clang and MSVC.
+  message(
+    FATAL_ERROR
+    "Detected C++ compiler ${CMAKE_CXX_COMPILER_ID} version"
+    " ${CMAKE_CXX_COMPILER_VERSION}. This compiler and version are not yet"
+    " supported."
+  )
+endif()
 
 if(quality_checks)
+  # Note, that the memory check variables must be set up before CTest is
+  # included. Thus, they are here and not in the unit_tests directory.
   string(CONCAT
     MEMORYCHECK_COMMAND_OPTIONS
     "--quiet"
@@ -47,5 +61,6 @@ if(quality_checks)
   )
   include(CTest)
   add_subdirectory(unit_tests)
+  add_subdirectory(compilation_tests)
   include(cmake/cmakelint.cmake)
 endif()
