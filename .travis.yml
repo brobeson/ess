@@ -17,12 +17,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - g++-5
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -33,12 +33,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - g++-6
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -49,12 +49,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - g++-7
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -65,12 +65,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - g++-8
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -82,11 +82,12 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-xenial-7
+            - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - clang-7
-            - clang-format-7
-            - clang-tidy-7
+            - clang-format-8
+            - clang-tidy-8
             - libboost-test-dev
             - valgrind
       env:
@@ -97,12 +98,11 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-7
             - llvm-toolchain-xenial-8
           packages:
             - cppcheck
             - clang-8
-            - clang-format-7
+            - clang-format-8
             - clang-tidy-8
             - libboost-test-dev
             - valgrind
@@ -111,7 +111,7 @@ matrix:
 
 install:
   - eval "${MATRIX_EVAL}"
-  - pip install --user ${USER} cmakelint lizard
+  - pip install --user ${USER} cmakelint lizard conan
 
   # set up a build directory, because in-source builds are not allowed
   - source_directory="${TRAVIS_BUILD_DIR}"
@@ -133,6 +133,7 @@ script:
 
   # release build & test
   - cd "${build_directory}"
+    && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Release
       -D quality_checks:BOOL=on
@@ -148,6 +149,7 @@ script:
 
   # debug build & test with address sanitizer
   - rm -r *
+    && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Debug
       -D quality_checks:BOOL=on
@@ -158,6 +160,7 @@ script:
 
   # debug build & test with Valgrind
   - rm -r *
+    && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Debug
       -D quality_checks:BOOL=on

@@ -29,16 +29,21 @@ else()
   )
 endif()
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
+find_package(Catch2 REQUIRED)
+
 set(tests
   point_test
 )
 foreach(test IN LISTS tests)
-  add_executable(${test} ${test}.cpp)
+  add_executable(${test} ${test}.cpp main.cpp)
   target_link_libraries(
     ${test}
     PRIVATE
       $<$<STREQUAL:"${dynamic_analysis}","asan">:asan>
+      Catch2::Catch2
+      ess::ess
   )
-  target_compile_definitions(${test} PRIVATE BOOST_TEST_DYN_LINK)
   add_test(NAME ${test} COMMAND ${test})
 endforeach()
+set_tests_properties(${tests} PROPERTIES LABELS unit)

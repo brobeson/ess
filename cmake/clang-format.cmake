@@ -29,7 +29,7 @@ string(
   clang_format_version
   "${clang_format_version}"
 )
-set(required_version "7.0.0")
+set(required_version "8.0.0")
 if(NOT clang_format_version VERSION_EQUAL ${required_version})
   message(
     AUTHOR_WARNING
