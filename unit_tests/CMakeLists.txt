@@ -44,6 +44,6 @@ foreach(test IN LISTS tests)
       Catch2::Catch2
       ess::ess
   )
-  target_compile_features(${test} PRIVATE cxx_std_17)
   add_test(NAME ${test} COMMAND ${test})
 endforeach()
+set_tests_properties(${tests} PROPERTIES LABELS unit)
