@@ -60,9 +60,9 @@ namespace ess
   struct point3 final
   {
     using value_type = std::decay_t<T>;
-    value_type x;
-    value_type y;
-    value_type z;
+    value_type x {0};
+    value_type y {0};
+    value_type z {0};
   };
 
   template <typename T>
