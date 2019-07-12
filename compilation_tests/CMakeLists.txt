@@ -7,12 +7,13 @@
 foreach(class point2 point3 vector2 vector3)
   set(types
     bool
-    std::byte
     char
     char16_t
     char32_t
     "int*"
     "signed char"
+    std::byte
+    std::string
     "unsigned char"
     wchar_t
   )
