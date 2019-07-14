@@ -31,43 +31,43 @@ namespace ess
   //                                                    point & vector classes
   //---------------------------------------------------------------------------
 
-  template <typename T>
+  template <Number T>
   class basic_2d_vector;
-  template <typename T>
+  template <Number T>
   class basic_3d_vector;
 
-  template <typename T>
+  template <Number T>
   struct basic_2d_point final
   {
-    using value_type = std::decay_t<T>;
+    using value_type = T;
     value_type x {0};
     value_type y {0};
   };
 
-  template <typename T>
+  template <Number T>
   struct basic_3d_point final
   {
-    using value_type = std::decay_t<T>;
+    using value_type = T;
     value_type x {0};
     value_type y {0};
     value_type z {0};
   };
 
-  template <typename T>
+  template <Number T>
   struct basic_2d_vector final
   {
-    using value_type = std::decay_t<T>;
-    value_type x;
-    value_type y;
+    using value_type = T;
+    value_type x {0};
+    value_type y {0};
   };
 
-  template <typename T>
+  template <Number T>
   struct basic_3d_vector final
   {
-    using value_type = std::decay_t<T>;
-    value_type x;
-    value_type y;
-    value_type z;
+    using value_type = T;
+    value_type x {0};
+    value_type y {0};
+    value_type z {0};
   };
 
   //---------------------------------------------------------------------------
@@ -92,7 +92,7 @@ namespace ess
   constexpr bool operator==(const basic_3d_point<T>& a,
                             const basic_3d_point<U>& b) noexcept
   {
-    return a.x == b.x && a.y == b.y && a.z == b.y;
+    return a.x == b.x && a.y == b.y && a.z == b.z;
   }
 
   template <typename T, typename U>
