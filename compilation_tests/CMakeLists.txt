@@ -36,7 +36,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     ${CMAKE_CXX_COMPILER}
     -fconcepts
     -std=c++2a
-    -I "${CMAKE_SOURCE_DIR}"
+    -I "${CMAKE_SOURCE_DIR}/ess"
   )
 else()
   # TODO Add support for Clang and MSVC.
