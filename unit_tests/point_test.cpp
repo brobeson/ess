@@ -19,8 +19,8 @@ SCENARIO("A point must be a regular type.")
 {
   GIVEN("A 2D point p,")
   {
-    constexpr ess::point2<int> p;
-    constexpr ess::point2<int> q;
+    constexpr ess::basic_2d_point<int> p;
+    constexpr ess::basic_2d_point<int> q;
     WHEN("the point is passed a function requiring a regular type,")
     {
       THEN("the code compiles.") { CHECK(is_regular(p, q)); }
@@ -28,8 +28,8 @@ SCENARIO("A point must be a regular type.")
   }
   GIVEN("A 3D point p,")
   {
-    constexpr ess::point3<int> p;
-    constexpr ess::point3<int> q;
+    constexpr ess::basic_3d_point<int> p;
+    constexpr ess::basic_3d_point<int> q;
     WHEN("the point is passed a function requiring a regular type,")
     {
       THEN("the code compiles.") { CHECK(is_regular(p, q)); }
@@ -41,7 +41,7 @@ SCENARIO("A point can be constructed.")
 {
   WHEN("A 2D point is default constructed,")
   {
-    constexpr ess::point2<int> p;
+    constexpr ess::basic_2d_point<int> p;
     THEN("the point is (0, 0).")
     {
       CHECK(p.x == 0);
@@ -50,7 +50,7 @@ SCENARIO("A point can be constructed.")
   }
   WHEN("A 2D point is user constructed,")
   {
-    constexpr ess::point2<int> p {2, 4};
+    constexpr ess::basic_2d_point<int> p {2, 4};
     THEN("the point matches the input data.")
     {
       CHECK(p.x == 2);
@@ -59,8 +59,8 @@ SCENARIO("A point can be constructed.")
   }
   WHEN("A 2D point is copy constructed,")
   {
-    constexpr ess::point2<int> p {2, 4};
-    constexpr ess::point2<int> q {p};
+    constexpr ess::basic_2d_point<int> p {2, 4};
+    constexpr ess::basic_2d_point<int> q {p};
     THEN("the two points are equal.")
     {
       CHECK(p.x == q.x);
@@ -69,8 +69,8 @@ SCENARIO("A point can be constructed.")
   }
   WHEN("A 2D point is move constructed,")
   {
-    ess::point2<int> p {2, 4};
-    const ess::point2<int> q {p};
+    ess::basic_2d_point<int> p {2, 4};
+    const ess::basic_2d_point<int> q {p};
     THEN("the new point has the original point's coordinates.")
     {
       CHECK(q.x == 2);
@@ -79,7 +79,7 @@ SCENARIO("A point can be constructed.")
   }
   WHEN("A 3D point is default constructed,")
   {
-    constexpr ess::point3<int> p {};
+    constexpr ess::basic_3d_point<int> p {};
     THEN("the point is (0, 0, 0).")
     {
       CHECK(p.x == 0);
@@ -89,7 +89,7 @@ SCENARIO("A point can be constructed.")
   }
   WHEN("A 3D point is user constructed,")
   {
-    constexpr ess::point3<int> p {2, 4, 6};
+    constexpr ess::basic_3d_point<int> p {2, 4, 6};
     THEN("the point matches the input data.")
     {
       CHECK(p.x == 2);
@@ -99,8 +99,8 @@ SCENARIO("A point can be constructed.")
   }
   WHEN("A 3D point is copy constructed,")
   {
-    constexpr ess::point3<int> p {2, 4, 6};
-    constexpr ess::point3<int> q {p};
+    constexpr ess::basic_3d_point<int> p {2, 4, 6};
+    constexpr ess::basic_3d_point<int> q {p};
     THEN("the two points are equal.")
     {
       CHECK(p.x == q.x);
@@ -110,8 +110,8 @@ SCENARIO("A point can be constructed.")
   }
   WHEN("A 3D point is move constructed,")
   {
-    ess::point3<int> p {2, 4, 6};
-    const ess::point3<int> q {p};
+    ess::basic_3d_point<int> p {2, 4, 6};
+    const ess::basic_3d_point<int> q {p};
     THEN("the new point has the original point's coordinates.")
     {
       CHECK(q.x == 2);
@@ -125,8 +125,8 @@ SCENARIO("A point can be assigned new values.")
 {
   GIVEN("Two different 2D points, p and q,")
   {
-    ess::point2<int> p;
-    constexpr ess::point2<int> q {2, 4};
+    ess::basic_2d_point<int> p;
+    constexpr ess::basic_2d_point<int> q {2, 4};
     WHEN("q is assigned to p,")
     {
       p = q;
@@ -139,8 +139,8 @@ SCENARIO("A point can be assigned new values.")
   }
   GIVEN("Two different 2D points, p and q,")
   {
-    ess::point2<int> p;
-    ess::point2<int> q {2, 4};
+    ess::basic_2d_point<int> p;
+    ess::basic_2d_point<int> q {2, 4};
     WHEN("q is move assigned to p,")
     {
       p = q;
@@ -153,8 +153,8 @@ SCENARIO("A point can be assigned new values.")
   }
   GIVEN("Two different 3D points, p and q,")
   {
-    ess::point3<int> p {};
-    constexpr ess::point3<int> q {2, 4, 6};
+    ess::basic_3d_point<int> p {};
+    constexpr ess::basic_3d_point<int> q {2, 4, 6};
     WHEN("q is assigned to p,")
     {
       p = q;
@@ -168,8 +168,8 @@ SCENARIO("A point can be assigned new values.")
   }
   GIVEN("Two different 3D points, p and q,")
   {
-    ess::point3<int> p {};
-    constexpr ess::point3<int> q {2, 4, 6};
+    ess::basic_3d_point<int> p {};
+    constexpr ess::basic_3d_point<int> q {2, 4, 6};
     WHEN("q is move assigned to p,")
     {
       p = q;
@@ -187,8 +187,8 @@ SCENARIO("Two points can be compared for equality and inequality.")
 {
   GIVEN("Two equal 2D points, p and q,")
   {
-    constexpr ess::point2<int> p {2, 4};
-    constexpr ess::point2<int> q {2, 4};
+    constexpr ess::basic_2d_point<int> p {2, 4};
+    constexpr ess::basic_2d_point<int> q {2, 4};
     WHEN("they are compared for equality,")
     {
       THEN("the result is true.") { CHECK(p == q); }
@@ -200,8 +200,8 @@ SCENARIO("Two points can be compared for equality and inequality.")
   }
   GIVEN("Two 2D points, which only differ in x,")
   {
-    constexpr ess::point2<int> p {1, 4};
-    constexpr ess::point2<int> q {2, 4};
+    constexpr ess::basic_2d_point<int> p {1, 4};
+    constexpr ess::basic_2d_point<int> q {2, 4};
     WHEN("they are compared for equality,")
     {
       THEN("the result is false.") { CHECK(!(p == q)); }
@@ -213,8 +213,8 @@ SCENARIO("Two points can be compared for equality and inequality.")
   }
   GIVEN("Two 2D points, which only differ in y,")
   {
-    constexpr ess::point2<int> p {2, 4};
-    constexpr ess::point2<int> q {2, 5};
+    constexpr ess::basic_2d_point<int> p {2, 4};
+    constexpr ess::basic_2d_point<int> q {2, 5};
     WHEN("they are compared for equality,")
     {
       THEN("the result is false.") { CHECK(!(p == q)); }
@@ -226,8 +226,8 @@ SCENARIO("Two points can be compared for equality and inequality.")
   }
   GIVEN("Two equal 3D points, p and q,")
   {
-    constexpr ess::point3<int> p {2, 4, 6};
-    constexpr ess::point3<int> q {2, 4, 6};
+    constexpr ess::basic_3d_point<int> p {2, 4, 6};
+    constexpr ess::basic_3d_point<int> q {2, 4, 6};
     WHEN("they are compared for equality,")
     {
       THEN("the result is true.") { CHECK(p == q); }
@@ -239,8 +239,8 @@ SCENARIO("Two points can be compared for equality and inequality.")
   }
   GIVEN("Two 3D points, which only differ in x,")
   {
-    constexpr ess::point3<int> p {1, 4, 6};
-    constexpr ess::point3<int> q {2, 4, 6};
+    constexpr ess::basic_3d_point<int> p {1, 4, 6};
+    constexpr ess::basic_3d_point<int> q {2, 4, 6};
     WHEN("they are compared for equality,")
     {
       THEN("the result is false.") { CHECK(!(p == q)); }
@@ -252,8 +252,8 @@ SCENARIO("Two points can be compared for equality and inequality.")
   }
   GIVEN("Two 3D points, which only differ in y,")
   {
-    constexpr ess::point3<int> p {2, 4, 6};
-    constexpr ess::point3<int> q {2, 5, 6};
+    constexpr ess::basic_3d_point<int> p {2, 4, 6};
+    constexpr ess::basic_3d_point<int> q {2, 5, 6};
     WHEN("they are compared for equality,")
     {
       THEN("the result is false.") { CHECK(!(p == q)); }
@@ -265,8 +265,8 @@ SCENARIO("Two points can be compared for equality and inequality.")
   }
   GIVEN("Two 3D points, which only differ in z,")
   {
-    constexpr ess::point3<int> p {2, 4, 6};
-    constexpr ess::point3<int> q {2, 4, 7};
+    constexpr ess::basic_3d_point<int> p {2, 4, 6};
+    constexpr ess::basic_3d_point<int> q {2, 4, 7};
     WHEN("they are compared for equality,")
     {
       THEN("the result is false.") { CHECK(!(p == q)); }

@@ -4,7 +4,7 @@
 # Generate tests files. This simplifies adding more tests in the future. Just
 # add classes or template types, and the basic C++ source file will be
 # generated.
-foreach(class point2 point3 vector2 vector3)
+foreach(class basic_2d_point basic_3d_point basic_2d_vector basic_3d_vector)
   set(types
     bool
     char
