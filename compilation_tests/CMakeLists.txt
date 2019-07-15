@@ -35,13 +35,13 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL GNU)
   set(build_command
     ${CMAKE_CXX_COMPILER}
     -fconcepts
-    -std=c++2a
+    -std=c++17
     -I "${CMAKE_SOURCE_DIR}/ess"
   )
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL Clang)
   set(build_command
     ${CMAKE_CXX_COMPILER}
-    -std=c++2a
+    -std=c++17
     -I "${CMAKE_SOURCE_DIR}/ess"
   )
 elseif(NOT CMAKE_CXX_COMPILER_ID STREQUAL Clang)

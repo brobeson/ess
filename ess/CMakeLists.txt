@@ -1,7 +1,7 @@
 add_library(ess INTERFACE)
 add_library(ess::ess ALIAS ess)
 target_include_directories(ess INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
-target_compile_features(ess INTERFACE cxx_std_20)
+target_compile_features(ess INTERFACE cxx_std_17)
 if(CMAKE_CXX_COMPILER_ID STREQUAL GNU
   AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 6.1
 )
