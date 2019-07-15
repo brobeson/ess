@@ -70,6 +70,19 @@ namespace ess
     value_type z {0};
   };
 
+  using ipoint_2d = basic_2d_point<int>;
+  using fpoint_2d = basic_2d_point<float>;
+  using dpoint_2d = basic_2d_point<double>;
+  using ipoint_3d = basic_3d_point<int>;
+  using fpoint_3d = basic_3d_point<float>;
+  using dpoint_3d = basic_3d_point<double>;
+  using ivector_2d = basic_2d_vector<int>;
+  using fvector_2d = basic_2d_vector<float>;
+  using dvector_2d = basic_2d_vector<double>;
+  using ivector_3d = basic_3d_vector<int>;
+  using fvector_3d = basic_3d_vector<float>;
+  using dvector_3d = basic_3d_vector<double>;
+
   //---------------------------------------------------------------------------
   //                                                                comparison
   //---------------------------------------------------------------------------
@@ -102,6 +115,7 @@ namespace ess
     return !(a == b);
   }
 
+  /*
   template <typename T, typename U>
   constexpr bool operator==(const basic_2d_vector<T>& a,
                             const basic_2d_vector<U>& b) noexcept
@@ -347,6 +361,7 @@ namespace ess
     return basic_3d_vector<T> {
       static_cast<T>(p.x), static_cast<T>(p.y), static_cast<T>(p.z)};
   }
+  */
 }  // namespace ess
 
 #endif
