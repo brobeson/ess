@@ -10,22 +10,40 @@ namespace ess
   //                                                                  concepts
   //---------------------------------------------------------------------------
 
+#ifdef __cpp_concepts
+#  if __cpp_concepts >= 201507
   // Clang-Format does not support formatting Concepts, yet.
   // clang-format off
   template <typename T>
   concept bool Integer =
     std::is_integral_v<T>
-    && !(std::is_same_v<std::decay_t<T>, bool>
-      || std::is_same_v<std::decay_t<T>, char>
-      || std::is_same_v<std::decay_t<T>, signed char>
-      || std::is_same_v<std::decay_t<T>, unsigned char>
-      || std::is_same_v<std::decay_t<T>, char16_t>
-      || std::is_same_v<std::decay_t<T>, char32_t>
-      || std::is_same_v<std::decay_t<T>, wchar_t>);
+    && !(std::is_same_v<std::remove_cv_t<T>, bool>
+      || std::is_same_v<std::remove_cv_t<T>, char>
+      || std::is_same_v<std::remove_cv_t<T>, signed char>
+      || std::is_same_v<std::remove_cv_t<T>, unsigned char>
+      || std::is_same_v<std::remove_cv_t<T>, char16_t>
+      || std::is_same_v<std::remove_cv_t<T>, char32_t>
+      || std::is_same_v<std::remove_cv_t<T>, wchar_t>);
 
   template <typename T>
   concept bool Number = std::is_floating_point_v< T> || Integer<T>;
   // clang-format on
+#  endif  // __cpp_concepts >= 201507
+#else     // __cpp_concepts is defined
+#  define Number typename
+  // clang-format off
+  template <typename T> struct is_number: public std::is_arithmetic<T> {};
+  template <> struct is_number<bool>: public std::false_type {};
+  template <> struct is_number<char>: public std::false_type {};
+  template <> struct is_number<signed char>: public std::false_type {};
+  template <> struct is_number<unsigned char>: public std::false_type {};
+  template <> struct is_number<char16_t>: public std::false_type {};
+  template <> struct is_number<char32_t>: public std::false_type {};
+  template <> struct is_number<wchar_t>: public std::false_type {};
+  // clang-format on
+#endif
+
+  // static_assert(is_number<wchar_t>::value);
 
   //---------------------------------------------------------------------------
   //                                                    point & vector classes
@@ -39,6 +57,9 @@ namespace ess
   template <Number T>
   struct basic_2d_point final
   {
+#ifndef __cpp_concepts
+    static_assert(is_number<T>::value);
+#endif
     using value_type = T;
     value_type x {0};
     value_type y {0};
@@ -47,6 +68,9 @@ namespace ess
   template <Number T>
   struct basic_3d_point final
   {
+#ifndef __cpp_concepts
+    static_assert(is_number<T>::value);
+#endif
     using value_type = T;
     value_type x {0};
     value_type y {0};
@@ -56,6 +80,9 @@ namespace ess
   template <Number T>
   struct basic_2d_vector final
   {
+#ifndef __cpp_concepts
+    static_assert(is_number<T>::value);
+#endif
     using value_type = T;
     value_type x {0};
     value_type y {0};
@@ -64,6 +91,9 @@ namespace ess
   template <Number T>
   struct basic_3d_vector final
   {
+#ifndef __cpp_concepts
+    static_assert(is_number<T>::value);
+#endif
     using value_type = T;
     value_type x {0};
     value_type y {0};

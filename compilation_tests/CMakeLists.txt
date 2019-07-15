@@ -31,15 +31,21 @@ endforeach()
 # Set up the compiler command, based on the compiler found by CMake. All this
 # command needs to do is attempt to compile a single source file to a single
 # object file.
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if(CMAKE_CXX_COMPILER_ID STREQUAL GNU)
   set(build_command
     ${CMAKE_CXX_COMPILER}
     -fconcepts
     -std=c++2a
     -I "${CMAKE_SOURCE_DIR}/ess"
   )
-else()
-  # TODO Add support for Clang and MSVC.
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL Clang)
+  set(build_command
+    ${CMAKE_CXX_COMPILER}
+    -std=c++2a
+    -I "${CMAKE_SOURCE_DIR}/ess"
+  )
+elseif(NOT CMAKE_CXX_COMPILER_ID STREQUAL Clang)
+  # TODO Add support for MSVC.
   message(FATAL_ERROR
     "Detected C++ compiler ${CMAKE_CXX_COMPILER_ID} version"
     " ${CMAKE_CXX_COMPILER_VERSION}. This compiler and version are not yet"
