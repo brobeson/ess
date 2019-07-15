@@ -110,6 +110,7 @@ SCENARIO("A point can be constructed.")
   }
   WHEN("A 3D point is move constructed,")
   {
+    // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
     ess::ipoint_3d p {2, 4, 6};
     const ess::ipoint_3d q {p};
     THEN("the new point has the original point's coordinates.")

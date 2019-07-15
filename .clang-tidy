@@ -4,7 +4,8 @@ Checks: >
   clang-diagnostic-*,
   clang-analyzer-*,
   *,
-  -fuchsia-default-arguments
+  -fuchsia-default-arguments,
+  -readability-magic-numbers
 WarningsAsErrors: '*'
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false

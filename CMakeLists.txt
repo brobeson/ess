@@ -17,12 +17,16 @@ option(
   "Disabling this disables quality checks such as clang-tidy and Cppcheck."
   on
 )
-#if(quality_checks)
+if(quality_checks)
 #  include(cmake/clang-format.cmake)
-#  include(cmake/clang-tidy.cmake)
+  # Clang-tidy does not support concepts, so it can only be run if the compiler
+  # is Clang. The code currently has a work around for Clang and concepts.
+  if(CMAKE_CXX_COMPILER_ID STREQUAL Clang)
+    include(cmake/clang-tidy.cmake)
+  endif()
 #  include(cmake/cppcheck.cmake)
 #  include(cmake/lizard.cmake)
-#endif()
+endif()
 include(cmake/compiler.cmake)
 add_subdirectory(ess)
 
