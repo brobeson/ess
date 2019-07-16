@@ -43,8 +43,6 @@ namespace ess
   // clang-format on
 #endif
 
-  // static_assert(is_number<wchar_t>::value);
-
   //---------------------------------------------------------------------------
   //                                                    point & vector classes
   //---------------------------------------------------------------------------
@@ -58,7 +56,8 @@ namespace ess
   struct basic_2d_point final
   {
 #ifndef __cpp_concepts
-    static_assert(is_number<T>::value);
+    static_assert(is_number<T>::value,
+                  "A 2D point can only be used with basic number types.");
 #endif
     using value_type = T;
     value_type x {0};
@@ -69,7 +68,8 @@ namespace ess
   struct basic_3d_point final
   {
 #ifndef __cpp_concepts
-    static_assert(is_number<T>::value);
+    static_assert(is_number<T>::value,
+                  "A 3D point can only be used with basic number types.");
 #endif
     using value_type = T;
     value_type x {0};
@@ -81,7 +81,8 @@ namespace ess
   struct basic_2d_vector final
   {
 #ifndef __cpp_concepts
-    static_assert(is_number<T>::value);
+    static_assert(is_number<T>::value,
+                  "A 2D vector can only be used with basic number types.");
 #endif
     using value_type = T;
     value_type x {0};
@@ -92,7 +93,8 @@ namespace ess
   struct basic_3d_vector final
   {
 #ifndef __cpp_concepts
-    static_assert(is_number<T>::value);
+    static_assert(is_number<T>::value,
+                  "A 3D vector can only be used with basic number types.");
 #endif
     using value_type = T;
     value_type x {0};
