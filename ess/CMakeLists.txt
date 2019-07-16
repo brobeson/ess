@@ -6,8 +6,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL GNU
   AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 6.1
 )
   target_compile_options(ess INTERFACE -fconcepts)
-elseif(NOT CMAKE_CXX_COMPILER_ID STREQUAL Clang)
-  # TODO Add support for MSVC.
+elseif(NOT
+  (CMAKE_CXX_COMPILER_ID STREQUAL Clang OR CMAKE_CXX_COMPILER_ID STREQUAL GCC)
+)
+  # TODO Add support for MSVC. See https://github.com/brobeson/ess/issues/15
   message(
     FATAL_ERROR
     "Detected C++ compiler ${CMAKE_CXX_COMPILER_ID} version"

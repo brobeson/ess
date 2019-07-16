@@ -44,8 +44,8 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL Clang)
     -std=c++17
     -I "${CMAKE_SOURCE_DIR}/ess"
   )
-elseif(NOT CMAKE_CXX_COMPILER_ID STREQUAL Clang)
-  # TODO Add support for MSVC.
+else()
+  # TODO Add support for MSVC. See https://github.com/brobeson/ess/issues/15
   message(FATAL_ERROR
     "Detected C++ compiler ${CMAKE_CXX_COMPILER_ID} version"
     " ${CMAKE_CXX_COMPILER_VERSION}. This compiler and version are not yet"
