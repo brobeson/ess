@@ -7,7 +7,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL GNU
 )
   target_compile_options(ess INTERFACE -fconcepts)
 elseif(NOT
-  (CMAKE_CXX_COMPILER_ID STREQUAL Clang OR CMAKE_CXX_COMPILER_ID STREQUAL GCC)
+  (CMAKE_CXX_COMPILER_ID STREQUAL Clang OR CMAKE_CXX_COMPILER_ID STREQUAL GNU)
 )
   # TODO Add support for MSVC. See https://github.com/brobeson/ess/issues/15
   message(
