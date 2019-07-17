@@ -99,11 +99,11 @@ script:
   # Ensure that there are no formatting issues.
   - find . -name '*.h' -exec clang-format -i -style=file {} \;
   - find . -name '*.cpp' -exec clang-format -i -style=file {} \;
-  - git status
   - git diff-index --quiet HEAD --
 
   # release build & test
   - cd "${build_directory}"
+    && echo "--------------------------------------------------------- Release Build & Test "
     && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Release
@@ -114,6 +114,7 @@ script:
 
   # debug build & test with address sanitizer
   - rm -r *
+    && echo "------------------------------------------------------------ ASan Build & Test "
     && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Debug
@@ -121,10 +122,11 @@ script:
       -D dynamic_analysis:STRING=asan
       "${source_directory}"
     && cmake --build . -- -j$(nproc)
-    && ctest --output-on-failure
+    && ctest --output-on-failure --label-regex unit
 
   # debug build & test with Valgrind
   - rm -r *
+    && echo "-------------------------------------------------------- Valgrind Build & Test "
     && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Debug
@@ -132,5 +134,8 @@ script:
       -D dynamic_analysis:STRING=valgrind
       "${source_directory}"
     && cmake --build . -- -j$(nproc)
-    && ctest --output-on-failure --dashboard ExperimentalMemCheck
+    && ctest 
+      --output-on-failure
+      --label-regex unit
+      --dashboard ExperimentalMemCheck
   - find . -name 'MemoryChecker.*.log' -exec cat {} \;
