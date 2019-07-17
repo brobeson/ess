@@ -11,6 +11,7 @@ project(
   HOMEPAGE_URL "https://github.com/brobeson/ess"
   LANGUAGES CXX
 )
+include(cmake/validate_compiler.cmake)
 
 option(
   quality_checks
