@@ -119,8 +119,6 @@ install:
   - mkdir "${build_directory}"
 
 script:
-  # Run Cppcheck manually. CMake ignores Cppcheck's exit status, so if an error
-  # is reported, the build would still pass.
   - cd "${source_directory}"
   - cppcheck
     --quiet
@@ -130,6 +128,9 @@ script:
     --error-exitcode=2
     -j $(nproc)
     .
+  - find . -name 'CMakeLists.txt' -exec cmakelint --spaces=2 {} \;
+  - find . -name '*.cmake' -exec cmakelint --spaces=2 {} \;
+  - lizard --CCN 10 --arguments 4 -- warnings_only --modified
 
   # release build & test
   - cd "${build_directory}"
