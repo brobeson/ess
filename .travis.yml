@@ -12,38 +12,6 @@ dist: xenial
 matrix:
   include:
     - os: linux
-      name: GCC 5
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-8
-          packages:
-            - cppcheck
-            - g++-5
-            - clang-format-8
-            - clang-tidy-8
-            - libboost-test-dev
-            - valgrind
-      env:
-        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-    - os: linux
-      name: GCC 6
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-8
-          packages:
-            - cppcheck
-            - g++-6
-            - clang-format-8
-            - clang-tidy-8
-            - libboost-test-dev
-            - valgrind
-      env:
-        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-    - os: linux
       name: GCC 7
       addons:
         apt:
@@ -55,7 +23,6 @@ matrix:
             - g++-7
             - clang-format-8
             - clang-tidy-8
-            - libboost-test-dev
             - valgrind
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
@@ -71,7 +38,6 @@ matrix:
             - g++-8
             - clang-format-8
             - clang-tidy-8
-            - libboost-test-dev
             - valgrind
       env:
         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
@@ -88,7 +54,6 @@ matrix:
             - clang-7
             - clang-format-8
             - clang-tidy-8
-            - libboost-test-dev
             - valgrind
       env:
         - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
@@ -104,7 +69,6 @@ matrix:
             - clang-8
             - clang-format-8
             - clang-tidy-8
-            - libboost-test-dev
             - valgrind
       env:
         - MATRIX_EVAL="CC=clang-8 && CXX=clang++-8"
