@@ -94,11 +94,12 @@ script:
     .
   - find . -name 'CMakeLists.txt' -exec cmakelint --spaces=2 {} \;
   - find . -name '*.cmake' -exec cmakelint --spaces=2 {} \;
-  - lizard --CCN 10 --arguments 4 -- warnings_only --modified
+  - lizard --CCN 10 --arguments 4 --warnings_only --modified
 
   # Ensure that there are no formatting issues.
   - find . -name '*.h' -exec clang-format -i -style=file {} \;
   - find . -name '*.cpp' -exec clang-format -i -style=file {} \;
+  - git status
   - git diff-index --quiet HEAD --
 
   # release build & test
