@@ -99,11 +99,11 @@ script:
   # Ensure that there are no formatting issues.
   - find . -name '*.h' -exec clang-format -i -style=file {} \;
   - find . -name '*.cpp' -exec clang-format -i -style=file {} \;
-  - git diff-index --quiet HEAD --
+  - test -z $(git status --porcelain)
 
   # release build & test
+  - echo "--------------------------------------------------------- Release Build & Test " > /dev/null
   - cd "${build_directory}"
-    && echo "--------------------------------------------------------- Release Build & Test "
     && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Release
@@ -113,8 +113,8 @@ script:
     && ctest --output-on-failure
 
   # debug build & test with address sanitizer
+  - echo "------------------------------------------------------------ ASan Build & Test " > /dev/null
   - rm -r *
-    && echo "------------------------------------------------------------ ASan Build & Test "
     && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Debug
@@ -125,8 +125,8 @@ script:
     && ctest --output-on-failure --label-regex unit
 
   # debug build & test with Valgrind
+  - echo "-------------------------------------------------------- Valgrind Build & Test " > /dev/null
   - rm -r *
-    && echo "-------------------------------------------------------- Valgrind Build & Test "
     && conan install "${source_directory}"
     && cmake
       -D CMAKE_BUILD_TYPE=Debug
