@@ -19,6 +19,8 @@ option(
   on
 )
 if(quality_checks)
+  include(cmake/clang-format.cmake)
+  include(cmake/lizard.cmake)
   # Clang-tidy does not support concepts, so it can only be run if the compiler
   # is Clang. The code currently has a work around for Clang and concepts.
   if(CMAKE_CXX_COMPILER_ID STREQUAL Clang)
@@ -43,4 +45,5 @@ if(quality_checks)
   include(CTest)
   add_subdirectory(unit_tests)
   add_subdirectory(compilation_tests)
+  include(cmake/cmakelint.cmake)
 endif()
